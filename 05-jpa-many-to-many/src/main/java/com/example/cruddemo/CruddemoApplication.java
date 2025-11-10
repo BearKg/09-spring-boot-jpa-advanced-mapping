@@ -1,10 +1,7 @@
 package com.example.cruddemo;
 
 import com.example.cruddemo.dao.AppDAO;
-import com.example.cruddemo.entity.Course;
-import com.example.cruddemo.entity.Instructor;
-import com.example.cruddemo.entity.InstructorDetail;
-import com.example.cruddemo.entity.Review;
+import com.example.cruddemo.entity.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -23,10 +20,53 @@ public class CruddemoApplication {
     @Bean
     public CommandLineRunner commandLineRunner(AppDAO appDAO) {
         return runner -> {
-            // createCourseAndReviews(appDAO);
-            // retrieveCourseAndReviews(appDAO);
-            deleteCourseAndReview(appDAO);
+            // createCourseAndStudent(appDAO);
+            // findCourseAndStudents(appDAO);
+            // findStudentAndCourses(appDAO);
+            addMoreCoursesForStudent(appDAO);
+
         };
+    }
+
+    private void addMoreCoursesForStudent(AppDAO appDAO) {
+        int theID = 2;
+        Student tempStudent = appDAO.findStudentAndCoursesByStudentId(theID);
+
+        Course tempCourse = new Course("Rubik's Cube - How to Speed Cube");
+        C
+    }
+
+    private void findStudentAndCourses(AppDAO appDAO) {
+        int theId = 2;
+        Student tempStudent = appDAO.findStudentAndCoursesByStudentId(theId);
+
+        System.out.println("Loaded student: "+ tempStudent);
+        System.out.println("Course: "+tempStudent.getCourses());
+        System.out.println("Done!");
+    }
+
+    private void findCourseAndStudents(AppDAO appDAO) {
+        int theId = 4;
+        Course tempCourse = appDAO.findCourseAndStudentsByCourseId(theId);
+
+        System.out.println("Loaded course: "+ tempCourse);
+        System.out.println("Students: "+tempCourse.getStudents());
+        System.out.println("Done!");
+    }
+
+    private void createCourseAndStudent(AppDAO appDAO) {
+        Course tempCourse = new Course("Pacman - How to score one million points");
+        Student tempStudent1 = new Student("John", "Doe", "john@luv2code.com");
+        Student tempStudent2 = new Student("Mary", "public", "mary.public@luv2code.com");
+
+        tempCourse.addStudent(tempStudent1);
+        tempCourse.addStudent(tempStudent2);
+
+        System.out.println("Saving the course " +tempCourse);
+        System.out.println("associated students " +tempCourse.getStudents());
+
+        appDAO.saveCourse(tempCourse);
+        System.out.println("Done!");
     }
 
     private void deleteCourseAndReview(AppDAO appDAO) {
