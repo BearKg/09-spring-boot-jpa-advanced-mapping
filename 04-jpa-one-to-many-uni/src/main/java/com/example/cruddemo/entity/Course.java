@@ -2,6 +2,7 @@ package com.example.cruddemo.entity;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -20,6 +21,7 @@ public class Course {
     private Instructor instructor;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "course_id")
     private List<Review> reviews;
 
     public Course() {}
@@ -50,6 +52,22 @@ public class Course {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
+    }
+
+    // add convenience method
+    public void addReview(Review review) {
+        if(reviews == null) {
+            reviews = new ArrayList<>();
+        }
+        reviews.add(review);
     }
 
     @Override
